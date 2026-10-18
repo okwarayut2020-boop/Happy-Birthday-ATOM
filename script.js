@@ -1,7 +1,7 @@
 const photos = [
-  { url: 'assets/photo1.jpg', caption: 'รูปแรกที่น่ารักกกกกกกกที่สุด' },
-  { url: 'assets/photo2.jpg', caption: 'รูปที่เท่&น่ารัก ✨' },
-  { url: 'assets/photo3.jpg', caption: 'ขอให้มีรอยยิ้มแบบนี้ในทุกๆ วันนะ ❤️' }
+  { url: 'photo1.jpg', caption: 'รูปแรกที่น่ารักกกกกกกกที่สุด' },
+  { url: 'photo2.jpg', caption: 'รูปที่เท่&น่ารัก ✨' },
+  { url: 'photo3.jpg', caption: 'ขอให้มีรอยยิ้มแบบนี้ในทุกๆ วันนะ ❤️' }
 ];
 
 let currentSlide = 0;
