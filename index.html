@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday! 🎂✨</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Google Fonts: Prompt -->
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600&display=swap" rel="stylesheet">
+  <!-- Canvas Confetti Library -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+
+  <!-- Background Floating Hearts Container -->
+  <div id="hearts-container"></div>
+
+  <!-- 1. หน้าต้อนรับ (Welcome Screen) -->
+  <div id="welcome-screen" class="card-box">
+    <div class="gift-icon">🎁</div>
+    <h1>Happy Birthday!</h1>
+    <p>มีของขวัญและความรู้สึกดีๆ ซ่อนอยู่ข้างในนี้...</p>
+    <button class="btn-main" onclick="startSurprise()">คลิกเพื่อเปิดกล่องของขวัญ 💖</button>
+  </div>
+
+  <!-- 2. หน้าเนื้อหาหลัก (Main Screen) -->
+  <div id="main-screen" class="card-box hidden">
+    <header>
+      <h1 class="glow-text">🎉 สุขสันต์วันเกิดนะ! 🎉</h1>
+      <p class="subtitle">ขอให้วันนี้และทุกๆ วันเต็มไปด้วยรอยยิ้มและความสุข</p>
+    </header>
+
+    <!-- แท็บเมนูลูกเล่น -->
+    <nav class="nav-tabs">
+      <button class="tab-btn active" onclick="switchTab('wish')"> เป่าเทียน</button>
+      <button class="tab-btn" onclick="switchTab('lantern')">🏮 โคมอธิษฐาน</button>
+      <button class="tab-btn" onclick="switchTab('gallery')"> ความทรงจำ</button>
+      <button class="tab-btn" onclick="switchTab('tree')">🌸 ต้นไม้แห่งรัก</button>
+      <button class="tab-btn" onclick="switchTab('letter')">💌 จดหมาย</button>
+    </nav>
+
+    <!-- Tab 1: เป่าเทียนวันเกิด -->
+    <section id="tab-wish" class="tab-content active">
+      <div class="cake-container">
+        <div class="flame" id="flame">🔥</div>
+        <div class="candle-stick"></div>
+        <div class="cake-emoji">🎂</div>
+      </div>
+      <p id="wish-instruction">อธิษฐานแล้วคลิกที่เปลวไฟเพื่อเป่าเทียนนะ!</p>
+      <button class="btn-action" onclick="blowCandle()">💨 เป่าเทียนอธิษฐาน</button>
+    </section>
+
+    <!-- Tab 2: ปล่อยโคมลอยคำอธิษฐาน -->
+    <section id="tab-lantern" class="tab-content hidden">
+      <div class="lantern-input-area">
+        <h3>🏮 พิมพ์คำอธิษฐานถึงดวงดาว</h3>
+        <textarea id="wish-input" rows="3" placeholder="พิมพ์ข้อความอธิษฐานของคุณที่นี่..."></textarea>
+        <button class="btn-action" onclick="releaseLantern()">✨ ปล่อยโคมลอยขึ้นฟ้า ✨</button>
+      </div>
+
+      <!-- พื้นที่จำลองท้องฟ้าปล่อยโคม -->
+      <div id="sky-area" class="sky-box">
+        <p id="sky-hint">คำอธิษฐานของคุณจะลอยส่องแสงบนท้องฟ้าคืนนี้ 🌌</p>
+      </div>
+    </section>
+
+    <!-- Tab 3: สไลด์รูปภาพความทรงจำ (แก้ไขให้รูปไม่โดนตัด) -->
+    <section id="tab-gallery" class="tab-content hidden">
+      <div class="carousel">
+        <div class="image-container">
+          <img id="carousel-img" src="assets/photo1.jpg" alt="Memory Photo">
+        </div>
+        <p id="carousel-caption" class="caption">รูปแรกที่น่ารักกกกกกกกที่สุด ❤️</p>
+        <div class="carousel-controls">
+          <button class="btn-sub" onclick="prevSlide()">❮ ย้อนกลับ</button>
+          <button class="btn-sub" onclick="nextSlide()">ถัดไป ❯</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tab 4: ต้นไม้/ดอกไม้รูปหัวใจ -->
+    <section id="tab-tree" class="tab-content hidden">
+      <p>กดปุ่มด้านล่างเพื่อปลูก "ต้นไม้พุ่มดอกไม้หัวใจ" ให้เบ่งบาน ✨</p>
+      <button class="btn-action" onclick="growHeartTree()">🌱 เริ่มปลูกต้นไม้แห่งรัก</button>
+      <canvas id="treeCanvas" width="350" height="250"></canvas>
+    </section>
+
+    <!-- Tab 5: จดหมายอวยพร -->
+    <section id="tab-letter" class="tab-content hidden">
+      <div class="letter-box">
+        <h3>💌 ถึงน้องอะตอม 💌</h3>
+        <p id="letter-text">
+          ❤️ สุขสันต์วันเกิดนะ! ขอให้มีความสุขมากๆ สุขภาพแข็งแรง สมหวังในทุกสิ่งที่ตั้งใจไว้ ยิ้มเยอะๆ พบเจอแต่สิ่งดีๆ ในทุกๆ วันนะ คิดถึงที่สุดเลย ขอให้น่ารักแบบนี้ต่อไปนะะ 
+          ขอให้โชคดีในทุกวัน และขอให้เจอกับคนที่ใช่นะะะ ❤️
+        </p>
+      </div>
+      <div class="interactive-love">
+        <button class="btn-heart" onclick="sendLove()">❤️ กดส่งความรัก (คลิกรัวๆ ได้เลย!)</button>
+        <p id="love-count">ส่งความรักไปแล้ว: <span id="count-num">0</span> ดวง</p>
+      </div>
+    </section>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
